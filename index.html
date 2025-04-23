@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VolleyFantasy - O Melhor Fantasy Game de Vôlei</title>
+    <style>
+      /* Estilos Gerais */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f0f2f5;
+        color: #333;
+      }
+
+      header {
+        background: linear-gradient(135deg, #1e88e5 0%, #0d47a1 100%);
+        color: white;
+        padding: 20px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo span {
+        color: #ffeb3b;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin: 0 15px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        color: #ffeb3b;
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        height: 3px;
+        width: 25px;
+        background: white;
+        margin: 3px 0;
+        border-radius: 3px;
+      }
+
+      .hero {
+        background: url("/api/placeholder/1200/600") center/cover no-repeat;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .hero-content {
+        position: relative;
+        max-width: 800px;
+        padding: 20px;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #ffeb3b;
+        color: #333;
+        border-radius: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn:hover {
+        background-color: #ffd600;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.2rem;
+        color: #1e88e5;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .feature-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        color: #1e88e5;
+        margin-bottom: 20px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .leaderboard {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      .leaderboard-table th,
+      .leaderboard-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      .leaderboard-table th {
+        font-weight: bold;
+        color: #1e88e5;
+      }
+
+      .leaderboard-table tr:hover {
+        background-color: #f9f9f9;
+      }
+
+      .rank {
+        font-weight: bold;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+      }
+
+      .rank-1 {
+        background-color: gold;
+        color: #333;
+      }
+
+      .rank-2 {
+        background-color: silver;
+        color: #333;
+      }
+
+      .rank-3 {
+        background-color: #cd7f32;
+        color: white;
+      }
+
+      footer {
+        background-color: #0d47a1;
+        color: white;
+        padding: 40px 0;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .footer-column h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #ffeb3b;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-column ul li a {
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-column ul li a:hover {
+        color: #ffeb3b;
+        padding-left: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .social-icon:hover {
+        background-color: #ffeb3b;
+        color: #0d47a1;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 40px;
+        font-size: 0.9rem;
+        color: #ccc;
+      }
+
+      /* Responsividade */
+      @media (max-width: 992px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        nav ul {
+          position: absolute;
+          top: 70px;
+          left: 0;
+          background-color: #0d47a1;
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 0;
+          height: 0;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          opacity: 0;
+        }
+
+        nav ul.active {
+          height: auto;
+          opacity: 1;
+        }
+
+        nav ul li {
+          margin: 15px 0;
+        }
+
+        .hero {
+          height: 400px;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero p {
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .section-title {
+          font-size: 1.8rem;
+        }
+
+        .feature-card {
+          padding: 20px;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-column {
+          margin-bottom: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav-container">
+        <div class="logo">
+          <div>Volley<span>Fantasy</span></div>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <nav>
+          <ul id="navMenu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Como Jogar</a></li>
+            <li><a href="#">Classificação</a></li>
+            <li><a href="#">Meu Time</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Bem-vindo ao VolleyFantasy</h1>
+        <p>
+          Monte seu time com os melhores jogadores de vôlei do mundo e compete
+          com outros fãs para ver quem entende mais do esporte!
+        </p>
+        <a href="#" class="btn">Comece a jogar agora</a>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 class="section-title">Como Funciona</h2>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">🏐</div>
+          <h3>Monte seu Time</h3>
+          <p>
+            Escolha os melhores jogadores dentro do orçamento disponível.
+            Analise estatísticas e forme um time equilibrado.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Acompanhe Pontos</h3>
+          <p>
+            Seus jogadores ganham pontos baseados nas performances reais nas
+            partidas. Acompanhe em tempo real!
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Ganhe Prêmios</h3>
+          <p>
+            Participe de ligas e campeonatos, ganhe pontos e resgate prêmios
+            exclusivos todo mês.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 class="section-title">Classificação da Semana</h2>
+      <div class="leaderboard">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Ranking</th>
+              <th>Jogador</th>
+              <th>Time</th>
+              <th>Pontos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank rank-1">1</span></td>
+              <td>MasterSpiker</td>
+              <td>Super Spikers</td>
+              <td>2,450</td>
+            </tr>
+            <tr>
+              <td><span class="rank rank-2">2</span></td>
+              <td>BlockMonster</td>
+              <td>Block Party</td>
+              <td>2,320</td>
+            </tr>
+            <tr>
+              <td><span class="rank rank-3">3</span></td>
+              <td>SetterQueen</td>
+              <td>Perfect Pass</td>
+              <td>2,180</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>LiberoLegend</td>
+              <td>Defense Masters</td>
+              <td>2,105</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>SpikeKing</td>
+              <td>Spike Force</td>
+              <td>1,990</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>VolleyFantasy</h3>
+            <p>
+              O melhor fantasy game de vôlei do Brasil. Monte seu time,
+              acompanhe os jogos e ganhe prêmios incríveis!
+            </p>
+          </div>
+          <div class="footer-column">
+            <h3>Links Rápidos</h3>
+            <ul>
+              <li><a href="#">Início</a></li>
+              <li><a href="#">Como Jogar</a></li>
+              <li><a href="#">Termos de Uso</a></li>
+              <li><a href="#">Política de Privacidade</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Contato</h3>
+            <ul>
+              <li>contato@volleyfantasy.com.br</li>
+              <li>(11) 99999-9999</li>
+              <li>São Paulo, Brasil</li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Redes Sociais</h3>
+            <div class="social-links">
+              <a href="#" class="social-icon">FB</a>
+              <a href="#" class="social-icon">IG</a>
+              <a href="#" class="social-icon">TW</a>
+              <a href="#" class="social-icon">YT</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 VolleyFantasy. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Menu mobile toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const navMenu = document.getElementById("navMenu");
+
+      menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
+
+      // Fechar menu ao clicar em um item
+      const navLinks = document.querySelectorAll("nav ul li a");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>
